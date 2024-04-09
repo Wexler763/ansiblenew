@@ -1,0 +1,39 @@
+- name: Combined Playbook
+  hosts: client
+  become: yes
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+      tags:
+        - update_cache
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      tags:
+        - nginx
+
+    - name: Install OpenVPN
+      apt:
+        name: openvpn
+        state: present
+      tags:
+        - openvpn
+
+    - name: Update all packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+      tags:
+        - update_packages
+
+  handlers:
+    - name: restart openvpn
+      service:
+        name: openvpn
+        state: restarted
+      listen: "restart openvpn"
+

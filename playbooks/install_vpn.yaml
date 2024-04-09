@@ -1,0 +1,21 @@
+---
+- name: Install and Configure OpenVPN Server
+  hosts: client
+  become: yes
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install OpenVPN
+      apt:
+        name: openvpn
+        state: present
+
+  handlers:
+    - name: restart openvpn
+      service:
+        name: openvpn
+        state: restarted
+

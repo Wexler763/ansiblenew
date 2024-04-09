@@ -1,0 +1,11 @@
+---
+- name: Update system
+  hosts: client
+  become: yes
+
+  tasks:
+    - name: Update all packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
